@@ -4,7 +4,8 @@ import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.
 class PersonalInformationPage extends StatefulWidget {
   final personalInfoData personalinfodata;
 
-  const PersonalInformationPage({Key? key, required this.personalinfodata}) : super(key: key);
+  const PersonalInformationPage({Key? key, required this.personalinfodata})
+      : super(key: key);
 
   @override
   State<PersonalInformationPage> createState() =>
@@ -18,9 +19,9 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
   TextEditingController ageController = TextEditingController();
   TextEditingController genderController = TextEditingController();
 
+  bool p_isChecked = false;
+
   personalInfoData get personalinfodata => widget.personalinfodata;
-
-
 
   @override
   void initState() {
@@ -30,8 +31,6 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
     ageController.text = personalinfodata.age.toString();
     genderController.text = personalinfodata.gender.toString();
     super.initState();
-
-
   }
 
   @override
@@ -50,30 +49,184 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Column(
               children: [
                 Container(
                   color: Colors.grey.shade300,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
                     controller: univController,
-                    decoration: InputDecoration(
-                      hintText: "*대학교를 입력해주세요.",
+                    decoration: const InputDecoration(
+                      hintText: "* 대학교를 입력해주세요.",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
                     ),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 36),
-                  child: Text(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 26),
+                  child: const Text(
                     "필수 입력 사항입니다.",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
                   ),
                 ),
               ],
             ),
-          )
-        ],
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                Container(
+                  color: Colors.grey.shade300,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  child: TextField(
+                    controller: univController,
+                    decoration: const InputDecoration(
+                      hintText: "* 대학교를 입력해주세요.",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 26),
+                  child: const Text(
+                    "필수 입력 사항입니다.",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                Container(
+                  color: Colors.grey.shade300,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  child: TextField(
+                    controller: univController,
+                    decoration: const InputDecoration(
+                      hintText: "* 대학교를 입력해주세요.",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 26),
+                  child: const Text(
+                    "필수 입력 사항입니다.",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                Container(
+                  color: Colors.grey.shade300,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  child: TextField(
+                    controller: univController,
+                    decoration: const InputDecoration(
+                      hintText: "* 대학교를 입력해주세요.",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 26),
+                  child: const Text(
+                    "필수 입력 사항입니다.",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                Container(
+                  color: Colors.grey.shade300,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  child: TextField(
+                    controller: univController,
+                    decoration: const InputDecoration(
+                      hintText: "* 대학교를 입력해주세요.",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 26),
+                  child: const Text(
+                    "필수 입력 사항입니다.",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                    value: p_isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        p_isChecked = value!;
+                      });
+                    }),
+                const Text(
+                  "면접 매칭 시 인적사항 비공유를 원하시면 체크해주세요.",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'pages/1_splashPage/splashPage.dart';
 import 'pages/2_loginPage/loginPage.dart';
 import 'pages/3_personalInformationPage/personalInformationPage.dart';
@@ -9,8 +10,15 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  personalInfoData p_data = personalInfoData(univ: 'UCB', major: "ME", gpa: 3);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const PersonalInformationPage(),
+      home: PersonalInformationPage(personalinfodata: p_data),
     );
   }
 }

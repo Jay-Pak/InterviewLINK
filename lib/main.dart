@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'pages/1_splashPage/splashPage.dart';
 import 'pages/2_loginPage/loginPage.dart';
 import 'pages/3_personalInformationPage/personalInformationPage.dart';
+import 'components/link_color.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue
+        brightness: Brightness.light,
+        primarySwatch: linkColors,
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
+          ),
+        ),
       ),
       home: const PersonalInformationPage(),
     );
@@ -44,13 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text(widget.title),
       ),
       body: Center(
-
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(

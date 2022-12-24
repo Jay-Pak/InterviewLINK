@@ -92,9 +92,9 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
-                    controller: univController,
+                    controller: majorController,
                     decoration: const InputDecoration(
-                      hintText: "* 대학교를 입력해주세요.",
+                      hintText: "* 전공를 입력해주세요.",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -123,9 +123,9 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
-                    controller: univController,
+                    controller: gpaController,
                     decoration: const InputDecoration(
-                      hintText: "* 대학교를 입력해주세요.",
+                      hintText: "* 학점을 입력해주세요.",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -154,9 +154,9 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
-                    controller: univController,
+                    controller: ageController,
                     decoration: const InputDecoration(
-                      hintText: "* 대학교를 입력해주세요.",
+                      hintText: "* 나이를 입력해주세요.",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -185,9 +185,9 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
-                    controller: univController,
+                    controller: genderController,
                     decoration: const InputDecoration(
-                      hintText: "* 대학교를 입력해주세요.",
+                      hintText: "* 성별을 입력해주세요.",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,

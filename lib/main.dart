@@ -5,6 +5,7 @@ import 'pages/1_splashPage/splashPage.dart';
 import 'pages/2_loginPage/loginPage.dart';
 import 'pages/3_personalInformationPage/personalInformationPage.dart';
 import 'components/link_color.dart';
+import 'pages/4_mainPage/mainPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  personalInfoData p_data = personalInfoData(univ: 'UCB', major: "ME", gpa: 3);
+
+//  인적사항 페이지 DATA 적용용
+  personalInfoData p_data = personalInfoData(univ: 'UCB', major: "ME", gpa: 3.9);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: PersonalInformationPage(personalinfodata: p_data),
+      home: MainPage(),
     );
   }
 }

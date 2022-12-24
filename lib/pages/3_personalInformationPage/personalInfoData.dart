@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class personalInfoData {
   String univ;
   String major;
-  int gpa;
+  double gpa;
   int? age;
   String? gender;
 

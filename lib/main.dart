@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/1_splashPage/splashPage.dart';
+import 'pages/2_loginPage/loginPage.dart';
+import 'pages/3_personalInformationPage/personalInformationPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue
       ),
-      home: const SplashPage(),
+      home: const PersonalInformationPage(),
     );
   }
 }

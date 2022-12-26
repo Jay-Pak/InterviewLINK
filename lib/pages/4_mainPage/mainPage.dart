@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -9,6 +10,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _current_index = 0;
+  int _turn_state = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,75 @@ class _MainPageState extends State<MainPage> {
                       fit: BoxFit.fill,
                       opacity: 0.4),
                 ),
-                child: Text(''),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      const Text(
+                        '면접 매칭을 시작합니다.',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      _turn_state == 0
+                          ? const Text(
+                              'User님은 현재 면접자 차례입니다.',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          : const Text(
+                              'User님은 현재 면접관 차례입니다.',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                      const SizedBox(
+                        height: 34,
+                      ),
+                      const Text(
+                        '지원회사 : ',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      const Text(
+                        '지원직무 : ',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      const Text(
+                        '이력서 : ',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      //  나의 지원 정보 class 필요함
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      InkWell(
+                        child: Container(
+                          margin: EdgeInsets.only(left:20,),
+                          height: 26,
+                          width: 100,
+                          color: const Color(0xFF000080),
+                          child: const Center(
+                            child: Text(
+                              '매칭하기',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               )),
           Expanded(
               flex: 1,
@@ -46,67 +116,68 @@ class _MainPageState extends State<MainPage> {
                       fit: BoxFit.fill,
                       opacity: 0.4),
                 ),
-                child: Text('data'),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Text(
+                        '나의 지원 정보',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 60,
+                      ),
+                      Text(
+                        '매칭을 위해 인적사항,',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      Text(
+                        '지원회사, 지원직무, 이력서 등을 입력해주세요.',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
               )),
         ],
       ),
-      bottomNavigationBar: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              onPressed: () {
-                _onCurrentPage(0);
-              },
-              icon: _current_index == 0
-                  ? const Icon(
-                      Icons.find_replace,
-                      color: Color(0xFF000080),
-                    )
-                  : const Icon(Icons.find_replace),
-            ),
-            IconButton(
-              onPressed: () {
-                _onCurrentPage(1);
-              },
-              icon: _current_index == 1
-                  ? const Icon(
-                      Icons.description,
-                      color: Color(0xFF000080),
-                    )
-                  : const Icon(Icons.description),
-            ),
-            IconButton(
-              onPressed: () {
-                _onCurrentPage(2);
-              },
-              icon: _current_index == 2
-                  ? const Icon(
-                      Icons.video_file,
-                      color: Color(0xFF000080),
-                    )
-                  : const Icon(Icons.video_file),
-            ),
-            IconButton(
-              onPressed: () {
-                _onCurrentPage(3);
-              },
-              icon: _current_index == 3
-                  ? const Icon(
-                      Icons.person,
-                      color: Color(0xFF000080),
-                    )
-                  : const Icon(Icons.person),
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 12,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _current_index,
+        onTap: (idx) {
+          setState(() {
+            _current_index = idx;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+              label: '매칭',
+              icon: Icon(
+                Icons.find_replace,
+              )),
+          BottomNavigationBarItem(
+              label: '이력서',
+              icon: Icon(
+                Icons.description,
+              )),
+          BottomNavigationBarItem(
+              label: '면접 기록',
+              icon: Icon(
+                Icons.video_file,
+              )),
+          BottomNavigationBarItem(
+              label: '내 정보',
+              icon: Icon(
+                Icons.person,
+              )),
+        ],
       ),
     );
-  }
-
-  void _onCurrentPage(int pageIndex) {
-    setState(() {
-      _current_index = pageIndex;
-    });
   }
 }

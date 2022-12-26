@@ -20,6 +20,7 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
   TextEditingController genderController = TextEditingController();
 
   bool p_isChecked = false;
+  int _current_index = 0;
 
   personalInfoData get personalinfodata => widget.personalinfodata;
 
@@ -227,6 +228,42 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
             )
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 12,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _current_index,
+        onTap: (idx) {
+          setState(() {
+            _current_index = idx;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            label: '매칭',
+            icon: Icon(
+              Icons.find_replace,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '이력서',
+            icon: Icon(
+              Icons.description,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '면접 기록',
+            icon: Icon(
+              Icons.video_file,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '내 정보',
+            icon: Icon(
+              Icons.person,
+            ),
+          ),
+        ],
       ),
     );
   }

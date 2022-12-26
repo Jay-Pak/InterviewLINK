@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -10,7 +11,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _current_index = 0;
-  int _turn_state = 0;
+  var turn_state = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _MainPageState extends State<MainPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      _turn_state == 0
+                      turn_state == 0
                           ? const Text(
                               'User님은 현재 면접자 차례입니다.',
                               style: TextStyle(
@@ -81,21 +82,24 @@ class _MainPageState extends State<MainPage> {
                       ),
                       //  나의 지원 정보 class 필요함
                       const SizedBox(
-                        height: 25,
+                        height: 24,
                       ),
-                      InkWell(
-                        child: Container(
-                          margin: EdgeInsets.only(left:20,),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: SizedBox(
                           height: 26,
                           width: 100,
-                          color: const Color(0xFF000080),
-                          child: const Center(
-                            child: Text(
-                              '매칭하기',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            //지원정보 미입력상태인 변수로 확인 후 버튼 활성화 or 비활성화
+                            child: const Center(
+                              child: Text(
+                                '매칭하기',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -120,25 +124,48 @@ class _MainPageState extends State<MainPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      SizedBox(
+                    children: [
+                      const SizedBox(
                         height: 40,
                       ),
-                      Text(
+                      const Text(
                         '나의 지원 정보',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
-                      Text(
+                      const Text(
                         '매칭을 위해 인적사항,',
                         style: TextStyle(color: Colors.grey),
                       ),
-                      Text(
+                      const Text(
                         '지원회사, 지원직무, 이력서 등을 입력해주세요.',
                         style: TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: SizedBox(
+                          height: 26,
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Center(
+                              child: Text(
+                                '입력하기',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -157,25 +184,29 @@ class _MainPageState extends State<MainPage> {
         },
         items: const [
           BottomNavigationBarItem(
-              label: '매칭',
-              icon: Icon(
-                Icons.find_replace,
-              )),
+            label: '매칭',
+            icon: Icon(
+              Icons.find_replace,
+            ),
+          ),
           BottomNavigationBarItem(
-              label: '이력서',
-              icon: Icon(
-                Icons.description,
-              )),
+            label: '이력서',
+            icon: Icon(
+              Icons.description,
+            ),
+          ),
           BottomNavigationBarItem(
-              label: '면접 기록',
-              icon: Icon(
-                Icons.video_file,
-              )),
+            label: '면접 기록',
+            icon: Icon(
+              Icons.video_file,
+            ),
+          ),
           BottomNavigationBarItem(
-              label: '내 정보',
-              icon: Icon(
-                Icons.person,
-              )),
+            label: '내 정보',
+            icon: Icon(
+              Icons.person,
+            ),
+          ),
         ],
       ),
     );

@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsPage.dart';
+import 'pages/10_startInterview/startInterviewPage.dart';
+import 'pages/11_endInterview/endInterviewPage.dart';
+import 'pages/12_interviewHistory/interviewHistory.dart';
 import 'pages/1_splashPage/splashPage.dart';
 import 'pages/2_loginPage/loginPage.dart';
 import 'pages/3_personalInformationPage/personalInformationPage.dart';
@@ -11,6 +14,7 @@ import 'pages/4_mainPage/mainPage.dart';
 import 'pages/6_resume/resumePage.dart';
 import 'pages/7_openResume/openResume.dart';
 import 'pages/8_matchingInProgress/matchingInProgressPage.dart';
+import 'pages/9_readyScreen/readyScreenPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: matchingInProgressPage(),
+      home: interviewHistoryPage(),
     );
   }
 }

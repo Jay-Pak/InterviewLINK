@@ -28,23 +28,54 @@ class _matchingInProgressPageState extends State<matchingInProgressPage> {
             height: 44,
           ),
           Container(
-            alignment: Alignment.center,
-            child: turn_state == 0
-                ? const Text(
-                    'User님은 현재 면접자 차례입니다.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF000080),
-                    ),
-                  )
-                : const Text(
-                    'User님은 현재 면접관 차례입니다.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF000080),
-                    ),
-                  ),
-          ),
+              alignment: Alignment.center,
+              child: turn_state == 0
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'User',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF000080),
+                          ),
+                        ),
+                        Text('님은 현재 '),
+                        Text(
+                          '면접자',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF000080),
+                          ),
+                        ),
+                        Text('차례입니다.')
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'User',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF000080),
+                          ),
+                        ),
+                        Text('님은 현재 '),
+                        Text(
+                          '면접관',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF000080),
+                          ),
+                        ),
+                        Text('차례입니다.')
+                      ],
+                    )),
           const SizedBox(
             height: 56,
           ),
@@ -52,12 +83,34 @@ class _matchingInProgressPageState extends State<matchingInProgressPage> {
             radius: 160,
             child: Text('EX'),
           ),
-          SizedBox(
-            height: 30,
+          const SizedBox(
+            height: 60,
           ),
           Container(
+            width: 320,
+            height: 60,
             color: const Color(0xFF000080),
-            child: Text('적절한 상대를 찾고 있습니다.', style: TextStyle(color: Colors.white),),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    '적절한 상대를 찾고 있습니다.',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '예상 대기 시간 03:00',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

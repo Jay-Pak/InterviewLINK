@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+
 /*FAQ 내용은 따로 작성해서 입력하기
   Update시에 자주 물어보는 질문 개선하면서, 내용 변경하기
  11*/
-
+ 
 class FAQ extends StatelessWidget {
   const FAQ({Key? key}) : super(key: key);
 

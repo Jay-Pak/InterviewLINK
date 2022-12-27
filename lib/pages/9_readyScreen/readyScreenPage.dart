@@ -1,33 +1,37 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:interview_link/components/link_color.dart';
 
-class resumeOpenPage extends StatefulWidget {
-  resumeOpenPage({Key? key}) : super(key: key);
-
-  @override
-  State<resumeOpenPage> createState() => _resumeOpenPageState();
-}
-
-class _resumeOpenPageState extends State<resumeOpenPage> {
-  int _current_index = 0;
+class readyScreenPage extends StatelessWidget {
+  readyScreenPage({Key? key}) : super(key: key);
 
   TextEditingController resumeTitleController = TextEditingController();
-  List<TextEditingController> questionController = [for(int i = 0; i < 5; i++) TextEditingController()];
-  List<TextEditingController> contentController = [for(int i = 0; i < 5; i++) TextEditingController()];
+  List<TextEditingController> questionController = [
+    for (int i = 0; i < 5; i++) TextEditingController()
+  ];
+  List<TextEditingController> contentController = [
+    for (int i = 0; i < 5; i++) TextEditingController()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {},
         ),
-        title: const Text("이력서 쓰기"),
+        title: const Text("면접준비"),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.check_rounded),
-            onPressed: () {},
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            child: Row(
+              children: const [
+                Icon(Icons.schedule),
+                Text('10:00'),
+              ],
+            ),
           ),
         ],
       ),
@@ -46,7 +50,6 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
               decoration: const InputDecoration(
                 hintText: "이력서 제목을 입력해주세요.",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
               ),
@@ -78,13 +81,13 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
                               color: Colors.grey.shade300,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 4),
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
                               child: TextField(
-                                controller: questionController[i-1],
+                                controller: questionController[i - 1],
                                 decoration: InputDecoration(
                                   hintText: "항목 $i : 자소서 $i 질문을 입력해주세요.",
-                                  hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
+                                  hintStyle: const TextStyle(
+                                      color: Colors.grey, fontSize: 12),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                 ),
@@ -101,14 +104,14 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
                               color: Colors.grey.shade300,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 4),
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
                               child: TextField(
                                 maxLines: 100,
-                                controller: contentController[i-1],
+                                controller: contentController[i - 1],
                                 decoration: const InputDecoration(
                                   hintText: "내용을 입력해주세요.",
-                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                 ),
@@ -125,41 +128,35 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 12,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _current_index,
-        onTap: (idx) {
-          setState(() {
-            _current_index = idx;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: '매칭',
-            icon: Icon(
-              Icons.find_replace,
+      bottomNavigationBar: SafeArea(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SizedBox(
+                height: 56,
+                width: 270,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('준비완료'),
+                ),
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: '이력서',
-            icon: Icon(
-              Icons.description,
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SizedBox(
+                height: 56,
+                width: 56,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Icon(Icons.warning),
+                ),
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: '면접 기록',
-            icon: Icon(
-              Icons.video_file,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '내 정보',
-            icon: Icon(
-              Icons.person,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 
 
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -11,7 +12,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _current_index = 0;
+
   var turn_state = 0;
+
 
   @override
   Widget build(BuildContext context) {

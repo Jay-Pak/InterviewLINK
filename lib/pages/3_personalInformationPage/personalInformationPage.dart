@@ -20,7 +20,9 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
   TextEditingController genderController = TextEditingController();
 
   bool p_isChecked = false;
+
   int _current_index = 0;
+
 
   personalInfoData get personalinfodata => widget.personalinfodata;
 

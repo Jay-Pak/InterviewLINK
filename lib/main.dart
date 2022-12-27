@@ -9,6 +9,7 @@ import 'pages/10_startInterview/startInterviewPage.dart';
 import 'pages/11_endInterview/endInterviewPage.dart';
 import 'pages/12_interviewHistory/interviewHistory.dart';
 
+import 'pages/13_playingRecordedInterview/playingRecordedInterviewPage.dart';
 import 'pages/1_splashPage/splashPage.dart';
 import 'pages/2_loginPage/loginPage.dart';
 import 'pages/3_personalInformationPage/personalInformationPage.dart';
@@ -55,8 +56,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-
-      home: interviewHistoryPage(),
+      home: readyScreenPage(),
     );
   }
 }
@@ -86,10 +86,15 @@ class _myinformation extends State<myinformation> {
       body: Column(
         children: [
           Container(
+            decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(width: 1.0, color: Colors.grey),
+                )),
+            height: 200,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20, top: 20),
                   child: Align(
                     alignment: Alignment.bottomLeft,
                     child: CircleAvatar(
@@ -116,11 +121,6 @@ class _myinformation extends State<myinformation> {
                 ),
               ],
             ),
-            decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 1.0, color: Colors.grey),
-                )),
-            height: 200,
           ),
           Expanded(
             flex: 1,

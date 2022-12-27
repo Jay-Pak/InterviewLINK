@@ -7,14 +7,14 @@ bottomNavigationBar 추가
 */
 
 
-class Complain extends StatefulWidget {
-  const Complain({Key? key}) : super(key: key);
+class complain extends StatefulWidget {
+  const complain({Key? key}) : super(key: key);
 
   @override
-  State<Complain> createState() => _ComplainState();
+  State<complain> createState() => _complainState();
 }
 
-class _ComplainState extends State<Complain> {
+class _complainState extends State<complain> {
   int _current_index = 0;
 
   @override
@@ -70,6 +70,43 @@ class _ComplainState extends State<Complain> {
                   focusedBorder: InputBorder.none,
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 12,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _current_index,
+        onTap: (idx) {
+          setState(() {
+            _current_index = idx;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            label: '매칭',
+            icon: Icon(
+              Icons.find_replace,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '이력서',
+            icon: Icon(
+              Icons.description,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '면접 기록',
+            icon: Icon(
+              Icons.video_file,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '내 정보',
+            icon: Icon(
+              Icons.person,
             ),
           ),
         ],

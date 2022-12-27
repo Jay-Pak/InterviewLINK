@@ -33,6 +33,13 @@ class _startInterviewPageState extends State<startInterviewPage> {
           ),
         ],
       ),
+
+      floatingActionButton: FloatingActionButton.small(
+        onPressed:(){},
+        child: Icon(Icons.sticky_note_2,),
+      ),
+
+
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,

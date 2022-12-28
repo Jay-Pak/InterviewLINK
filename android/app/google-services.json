@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1872913033",
+    "project_id": "interviewlink-e3afb",
+    "storage_bucket": "interviewlink-e3afb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1872913033:android:200dfc9dec843fd0c71c58",
+        "android_client_info": {
+          "package_name": "com.interview_link.app.interview_link"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1872913033-s3v0l893rocvo3jrj5innitkj5a4k704.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.interview_link.app.interview_link",
+            "certificate_hash": "36163a717b37f5cf28915ddbcb608a90fa5eb3bd"
+          }
+        },
+        {
+          "client_id": "1872913033-umm5ben9rjoq950ntutt49ihh2fr6fpd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC19j1NzZVzh5kFc6xEjPRw8t_0zomEJXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1872913033-umm5ben9rjoq950ntutt49ihh2fr6fpd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

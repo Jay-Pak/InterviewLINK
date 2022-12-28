@@ -11,6 +11,7 @@ import 'pages/10_startInterview/startInterviewPage.dart';
 import 'pages/11_endInterview/endInterviewPage.dart';
 import 'pages/12_interviewHistory/interviewHistory.dart';
 
+import 'pages/13_playingRecordedInterview/playingRecordedInterviewPage.dart';
 import 'pages/1_splashPage/splashPage.dart';
 import 'pages/2_loginPage/loginPage.dart';
 import 'pages/3_personalInformationPage/personalInformationPage.dart';
@@ -59,8 +60,10 @@ class _MyAppState extends State<MyApp> {
       ),
 
       home: startInterviewPage(),
+
     );
   }
 }
+
 
 

@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
 
-      home: readyScreenPage(),
+      home: startInterviewPage(),
     );
   }
 }

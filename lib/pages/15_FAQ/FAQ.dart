@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
   Update시에 자주 물어보는 질문 개선하면서, 내용 변경하기
  11*/
  
-class FAQ extends StatelessWidget {
+class FAQ extends StatefulWidget {
   const FAQ({Key? key}) : super(key: key);
 
+  @override
+  State<FAQ> createState() => _FAQState();
+}
+
+class _FAQState extends State<FAQ> {
+  int _current_index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +32,47 @@ class FAQ extends StatelessWidget {
               EntryItem(data[index]),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 12,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _current_index,
+        onTap: (idx) {
+          setState(() {
+            _current_index = idx;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            label: '매칭',
+            icon: Icon(
+              Icons.find_replace,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '이력서',
+            icon: Icon(
+              Icons.description,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '면접 기록',
+            icon: Icon(
+              Icons.video_file,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '내 정보',
+            icon: Icon(
+              Icons.person,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
+
 
 class Entry {
   Entry(this.title, [this.content = const <Entry>[]]);

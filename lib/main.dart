@@ -7,7 +7,8 @@ import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsPage.dart';
-import 'pages/10_startInterview/startInterviewPage.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'pages/10_startInterview(interviewer)/startInterviewInterviewerPage.dart';
 import 'pages/11_endInterview/endInterviewPage.dart';
 import 'pages/12_interviewHistory/interviewHistory.dart';
 
@@ -25,6 +26,7 @@ import 'pages/9_readyScreen/readyScreenPage.dart';
 
 
 void main() {
+  KakaoSdk.init(nativeAppKey: '323269abd66eb75436b50ec1d82ca942');
   runApp(const MyApp());
 }
 
@@ -59,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
 
-      home: startInterviewPage(),
+      home: LoginPage(),
 
     );
   }

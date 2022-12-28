@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class startInterviewPage extends StatefulWidget {
-  const startInterviewPage({Key? key}) : super(key: key);
+class startInterviewApplicantPage extends StatefulWidget {
+  const startInterviewApplicantPage({Key? key}) : super(key: key);
 
   @override
-  State<startInterviewPage> createState() => _startInterviewPageState();
+  State<startInterviewApplicantPage> createState() => _startInterviewApplicantPageState();
 }
 
-class _startInterviewPageState extends State<startInterviewPage> {
+class _startInterviewApplicantPageState extends State<startInterviewApplicantPage> {
   @override
   Widget build(BuildContext context) {
 
@@ -33,12 +33,6 @@ class _startInterviewPageState extends State<startInterviewPage> {
           ),
         ],
       ),
-
-      floatingActionButton: FloatingActionButton.small(
-        onPressed:(){},
-        child: Icon(Icons.sticky_note_2,),
-      ),
-
 
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 12,

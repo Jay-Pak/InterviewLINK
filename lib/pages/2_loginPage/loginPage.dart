@@ -1,7 +1,67 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-class LoginPage extends StatelessWidget {
+// enum LoginPlatform {
+//   kakao,
+//   google,
+//   none,
+// }
+
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  // LoginPlatform _loginPlatform = LoginPlatform.none;
+
+  // void signInWithKakao() async {
+  //   try {
+  //     bool isInstalled = await isKakaoTalkInstalled();
+  //
+  //     OAuthToken token = isInstalled
+  //         ? await UserApi.instance.loginWithKakaoTalk()
+  //         : await UserApi.instance.loginWithKakaoAccount();
+  //
+  //     final url = Uri.https('kapi.kakao.com', '/v2/user/me');
+  //
+  //     final response = await http.get(
+  //       url,
+  //       headers: {
+  //         HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'
+  //       },
+  //     );
+  //
+  //     final profileInfo = json.decode(response.body);
+  //     print(profileInfo.toString());
+  //
+  //     setState(() {
+  //       _loginPlatform = LoginPlatform.kakao;
+  //     });
+  //   } catch (error) {
+  //     print('카카오톡으로 로그인 실패 $error');
+  //   }
+  // }
+  //
+  // void signOut() async {
+  //   switch (_loginPlatform) {
+  //     case LoginPlatform.google:
+  //       break;
+  //     case LoginPlatform.kakao:
+  //       // 추가
+  //       await UserApi.instance.logout();
+  //       break;
+  //   }
+  //
+  //   setState(() {
+  //     _loginPlatform = LoginPlatform.none;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +100,20 @@ class LoginPage extends StatelessWidget {
           height: 188,
         ),
         InkWell(
+          onTap: () {},
           child: Container(
             width: 320,
             height: 57,
             decoration: BoxDecoration(
-                color: const Color.fromRGBO(253, 220, 63, 1),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(5, 5),
-                    color: Colors.grey.withOpacity(0.5),
-                  ),
-                ]),
+              color: const Color.fromRGBO(253, 220, 63, 1),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(5, 5),
+                  color: Colors.grey.withOpacity(0.5),
+                ),
+              ],
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -60,7 +122,9 @@ class LoginPage extends StatelessWidget {
                   height: 24,
                   width: 24,
                   child: const Image(
-                    image: AssetImage("assets/images/kakaologo.png"),
+                    image: AssetImage(
+                      "assets/images/kakaologo.png",
+                    ),
                   ),
                 ),
                 const Text(
@@ -73,10 +137,12 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {},
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         InkWell(
+          onTap: () {},
           child: Container(
             width: 320,
             height: 57,
@@ -111,7 +177,6 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {},
         ),
         Container(
           margin: const EdgeInsets.only(top: 14),

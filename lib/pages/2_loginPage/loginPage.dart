@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   mainViewModel kakaoModel = mainViewModel(kakaoLogin());
+  mainViewModel kakaoModel2 = mainViewModel(kakaoLogin());
 
   @override
   Widget build(BuildContext context) {

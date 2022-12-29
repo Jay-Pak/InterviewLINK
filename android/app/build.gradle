@@ -21,14 +21,19 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-apply plugin:  'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.firebase.crashlytics'
+
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+
 android {
-    compileSdkVersion flutter.compileSdkVersion
+//    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,7 +53,8 @@ android {
         applicationId "com.interview_link.app.interview_link"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+//        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -69,6 +75,7 @@ flutter {
 
 dependencies {
     implementation 'com.google.firebase:firebase-analytics'
-    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+//    implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }

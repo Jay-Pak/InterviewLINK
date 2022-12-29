@@ -11,11 +11,14 @@ import 'package:interview_link/pages/15_FAQ/FAQ.dart';
 import 'package:interview_link/pages/16_complain/complain.dart';
 import 'package:interview_link/pages/2_loginPage/mainViewModel.dart';
 import 'package:interview_link/pages/2_loginPage/social_login.dart';
+import 'package:interview_link/pages/2_loginPage/google_login.dart';
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsPage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'pages/10_startInterview(interviewer)/startInterviewInterviewerPage.dart';
 import 'pages/11_endInterview/endInterviewPage.dart';
 import 'pages/12_interviewHistory/interviewHistory.dart';

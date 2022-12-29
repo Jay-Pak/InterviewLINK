@@ -37,6 +37,13 @@
             {
               "client_id": "1872913033-umm5ben9rjoq950ntutt49ihh2fr6fpd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1872913033-i6ll0eb30mqc26hosnafjbbqc76u38oc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.interviewlink.app.interviewLink"
+              }
             }
           ]
         }

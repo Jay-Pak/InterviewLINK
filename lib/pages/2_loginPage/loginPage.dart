@@ -12,6 +12,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
+  mainViewModel kakaoModel = mainViewModel(kakaoLogin());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +51,10 @@ class _LoginPageState extends State<LoginPage> {
           height: 188,
         ),
         InkWell(
-          onTap: () {},
+          onTap: () async {
+            await kakaoModel.login();
+            setState(() {});
+          },
           child: Container(
             width: 320,
             height: 57,

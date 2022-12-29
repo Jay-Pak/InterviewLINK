@@ -9,10 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:interview_link/pages/14_myInformation/myInformation.dart';
 import 'package:interview_link/pages/15_FAQ/FAQ.dart';
 import 'package:interview_link/pages/16_complain/complain.dart';
+import 'package:interview_link/pages/2_loginPage/mainViewModel.dart';
+import 'package:interview_link/pages/2_loginPage/social_login.dart';
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsData.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsPage.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'pages/10_startInterview(interviewer)/startInterviewInterviewerPage.dart';
 import 'pages/11_endInterview/endInterviewPage.dart';
 import 'pages/12_interviewHistory/interviewHistory.dart';
@@ -30,8 +33,11 @@ import 'pages/8_matchingInProgress/matchingInProgressPage.dart';
 import 'pages/9_readyScreen/readyScreenPage.dart';
 
 
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  KakaoSdk.init(nativeAppKey: '323269abd66eb75436b50ec1d82ca942');
   await Firebase.initializeApp();
   
   runZonedGuarded(() async{
@@ -40,6 +46,9 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 }
+
+
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -56,6 +65,7 @@ class _MyAppState extends State<MyApp> {
   personalInfoData p_data = personalInfoData(univ: 'UCB', major: "ME", gpa: 3.9);
   matchingConditionsData m_data = matchingConditionsData(company: 'samsung', field: 'design', resume: 'resume');
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  final viewModel = mainViewModel(kakaoLogin());
 
   @override
   Widget build(BuildContext context) {

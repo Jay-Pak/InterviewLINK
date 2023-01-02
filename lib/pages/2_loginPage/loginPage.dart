@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:interview_link/pages/2_loginPage/mainViewModel.dart';
 import 'package:interview_link/pages/2_loginPage/social_login.dart';
 import 'package:interview_link/pages/2_loginPage/google_login.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,7 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +50,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 188,
         ),
         InkWell(
-          onTap: () {
-          },
+          onTap: () {},
           child: Container(
             width: 320,
             height: 57,
@@ -95,8 +93,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
         InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Home()),);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
           },
           child: Container(
             width: 320,

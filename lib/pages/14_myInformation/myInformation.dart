@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:interview_link/pages/2_loginPage/loginPage.dart';
+import 'package:interview_link/pages/2_loginPage/google_setting.dart';
 
 class myinformation extends StatefulWidget {
   const myinformation({Key? key}) : super(key: key);
@@ -10,6 +11,27 @@ class myinformation extends StatefulWidget {
 
 class _myinformation extends State<myinformation> {
   int _current_index = 0;
+  bool _isSigningOut = false;
+
+
+  //Logout 버튼 누를 시, 기존 카카오/구글 로그인 페이지로 이동
+  Route _routeToSignInScreen() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(-1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +63,7 @@ class _myinformation extends State<myinformation> {
                     child: Text(
                       '테라이님',
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
                   trailing: Transform.translate(
@@ -56,8 +78,8 @@ class _myinformation extends State<myinformation> {
             ),
             decoration: BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(width: 1.0, color: Colors.grey),
-                )),
+              bottom: BorderSide(width: 1.0, color: Colors.grey),
+            )),
             height: 200,
           ),
           Expanded(
@@ -132,16 +154,23 @@ class _myinformation extends State<myinformation> {
                     icon: Icon(Icons.navigate_next),
                   ),
                   title: Text('로그아웃'),
+                  onTap: () async {
+                    setState(() {
+                      _isSigningOut = true;
+                    });
+                    await google_setting.signOut(context: context);
+                    setState(() {
+                      _isSigningOut = false;
+                    });
+                    Navigator.of(context)
+                        .pushReplacement(_routeToSignInScreen());
+                  },
                 ),
               ],
             ),
           ),
         ],
       ),
-
-
-
-
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:interview_link/pages/2_loginPage/mainViewModel.dart';
 import 'package:interview_link/pages/2_loginPage/social_login.dart';
-import 'package:interview_link/pages/2_loginPage/google_login.dart';
+import 'google_setting.dart';
+import '../14_myInformation/myInformation.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,14 +15,40 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   mainViewModel kakaoModel = mainViewModel(kakaoLogin());
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  bool _isSigningIn = false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
+
+        /* Autnetication 파이어베이스 초기화 :
+        예제에서는 FutureBuilder내에서, snapshot.connectionState == done 일때
+        구글로그인 버튼을 만들었음
+
+        FutureBuilder(
+          future: Authentication.initializeFirebase(context: context),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error initializing Firebase');
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return Text('ready');
+            }
+            return CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.black,
+              ),
+            );
+          },
+        ),
+         */
+
         Container(
           height: 246,
         ),
-        SizedBox(
+          SizedBox(
           width: 80,
           height: 80,
           child: ClipRRect(
@@ -96,12 +123,28 @@ class _LoginPageState extends State<LoginPage> {
           height: 10,
         ),
         InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
+          onTap: () async {
+            setState(() {
+              _isSigningIn = true;
+            });
+
+            User? user =
+            await google_setting.signInWithGoogle(context: context);
+
+            setState(() {
+              _isSigningIn = false;
+            });
+
+            if (user != null) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => myinformation(),
+                  //로그인 완료후 넘어갈 페이지
+                ),
+              );
+            }
           },
+
           child: Container(
             width: 320,
             height: 57,

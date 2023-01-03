@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:interview_link/pages/2_loginPage/kakao_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:interview_link/pages/2_loginPage/google_setting.dart';
+import 'package:interview_link/pages/2_loginPage/kakao_login.dart' as kakao;
 import 'package:interview_link/pages/2_loginPage/mainViewModel.dart';
-import 'package:interview_link/pages/2_loginPage/google_login.dart';
+
+import '../14_myInformation/myInformation.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,7 +15,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  mainViewModel viewModel = mainViewModel(kakaoLogin());
+  mainViewModel viewModel = mainViewModel(kakao.kakaoLogin());
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  bool _isSigningIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +101,26 @@ class _LoginPageState extends State<LoginPage> {
           height: 10,
         ),
         InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
+          onTap: () async {
+            setState(() {
+              _isSigningIn = true;
+            });
+
+            User? user =
+                await google_setting.signInWithGoogle(context: context);
+
+            setState(() {
+              _isSigningIn = false;
+            });
+
+            if (user != null) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const MyInformation(),
+                  //로그인 완료후 넘어갈 페이지
+                ),
+              );
+            }
           },
           child: Container(
             width: 320,

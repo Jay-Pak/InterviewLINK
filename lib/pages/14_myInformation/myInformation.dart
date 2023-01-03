@@ -1,183 +1,139 @@
 import 'package:flutter/material.dart';
+import '../2_loginPage/kakao_login.dart';
+import '../2_loginPage/mainViewModel.dart';
 
 
-class myinformation extends StatefulWidget {
-  const myinformation({Key? key}) : super(key: key);
+class MyInformation extends StatefulWidget {
+  const MyInformation({Key? key}) : super(key: key);
 
   @override
-  State<myinformation> createState() => _myinformation();
+  State<MyInformation> createState() => _MyInformation();
 }
 
-class _myinformation extends State<myinformation> {
-  int _current_index = 0;
+class _MyInformation extends State<MyInformation> {
+  mainViewModel viewModel = mainViewModel(kakaoLogin());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("내 정보"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
+    return Column(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: 1.0, color: Colors.grey),
+              )),
+          height: 200,
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 20, top: 20),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: CircleAvatar(
+                    radius: 50,
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Transform.translate(
+                  offset: const Offset(10, 15),
+                  child: const Text(
+                    '테라이님',
+                    style:
+                    TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                trailing: Transform.translate(
+                  offset: const Offset(0, 15),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.navigate_next),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: CircleAvatar(
-                      radius: 50,
-                    ),
-                  ),
+        Expanded(
+          flex: 1,
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.notifications),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.navigate_next),
                 ),
-                ListTile(
-                  title: Transform.translate(
-                    offset: Offset(10, 15),
-                    child: Text(
-                      '테라이님',
-                      style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  trailing: Transform.translate(
-                    offset: Offset(0, 15),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.navigate_next),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 1.0, color: Colors.grey),
-                )),
-            height: 200,
-          ),
-          Expanded(
-            flex: 1,
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.notifications),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.navigate_next),
-                  ),
-                  title: Text('공지사항'),
-                  /*Transform.translate(
+                title: Text('공지사항'),
+                /*Transform.translate(
                       offset: Offset(-20, -2), child: Text('문의하기')),*/
+              ),
+              ListTile(
+                leading: const Icon(Icons.question_answer),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.navigate_next),
                 ),
-                ListTile(
-                  leading: Icon(Icons.question_answer),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.navigate_next),
-                  ),
-                  title: Text('자주 물어보는 질문'),
-                  /*Transform.translate(
+                title: const Text('자주 물어보는 질문'),
+                /*Transform.translate(
                       offset: Offset(-20, -2), child: Text('문의하기')),*/
+              ),
+              ListTile(
+                leading: const Icon(Icons.favorite),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.navigate_next),
                 ),
-                ListTile(
-                  leading: Icon(Icons.favorite),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.navigate_next),
-                  ),
-                  title: Text('리뷰 남기'),
-                  /*Transform.translate(
+                title: const Text('리뷰 남기'),
+                /*Transform.translate(
                       offset: Offset(-20, -2), child: Text('문의하기')),*/
+              ),
+              ListTile(
+                leading: const Icon(Icons.content_copy),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.navigate_next),
                 ),
-                ListTile(
-                  leading: Icon(Icons.content_copy),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.navigate_next),
-                  ),
-                  title: Text('서비스 이용약관'),
-                  /*Transform.translate(
+                title: const Text('서비스 이용약관'),
+                /*Transform.translate(
                       offset: Offset(-20, -2), child: Text('문의하기')),*/
+              ),
+              ListTile(
+                leading: const Icon(Icons.content_copy),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.navigate_next),
                 ),
-                ListTile(
-                  leading: Icon(Icons.content_copy),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.navigate_next),
-                  ),
-                  title: Text('개인정보처리방침'),
-                  /*Transform.translate(
+                title: const Text('개인정보처리방침'),
+                /*Transform.translate(
                       offset: Offset(-20, -2), child: Text('문의하기')),*/
+              ),
+              ListTile(
+                leading: const Icon(Icons.contact_support),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.navigate_next),
                 ),
-                ListTile(
-                  leading: Icon(Icons.contact_support),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.navigate_next),
-                  ),
-                  title: Text('문의하기'),
-                  /*Transform.translate(
+                title: const Text('문의하기'),
+                /*Transform.translate(
                       offset: Offset(-20, -2), child: Text('문의하기')),*/
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                trailing: IconButton(
+                  onPressed: () async {
+                    await viewModel.logout();
+                    setState(() {});
+                  },
+                  icon: const Icon(Icons.navigate_next),
                 ),
-                ListTile(
-                  leading: Icon(Icons.logout),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.navigate_next),
-                  ),
-                  title: Text('로그아웃'),
-                ),
-              ],
-            ),
+                title: const Text('로그아웃'),
+              ),
+            ],
           ),
-        ],
-      ),
-
-
-
-
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 12,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _current_index,
-        onTap: (idx) {
-          setState(() {
-            _current_index = idx;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: '매칭',
-            icon: Icon(
-              Icons.find_replace,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '이력서',
-            icon: Icon(
-              Icons.description,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '면접 기록',
-            icon: Icon(
-              Icons.video_file,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '내 정보',
-            icon: Icon(
-              Icons.person,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

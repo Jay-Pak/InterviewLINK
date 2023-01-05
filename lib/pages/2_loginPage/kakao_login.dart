@@ -1,7 +1,7 @@
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'social_login.dart';
 
-class kakaoLogin implements SocialLogin {
+class KakaoLogin implements SocialLogin {
   @override
   Future<bool> login() async {
     try {
@@ -35,5 +35,4 @@ class kakaoLogin implements SocialLogin {
       return false;
     }
   }
-
 }

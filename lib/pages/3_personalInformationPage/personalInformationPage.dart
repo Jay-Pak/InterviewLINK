@@ -1,11 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 
 class PersonalInformationPage extends StatefulWidget {
-  final personalInfoData personalinfodata;
-
-  const PersonalInformationPage({Key? key, required this.personalinfodata})
-      : super(key: key);
+  const PersonalInformationPage({Key? key}) : super(key: key);
 
   @override
   State<PersonalInformationPage> createState() =>
@@ -18,22 +16,41 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
   TextEditingController gpaController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController genderController = TextEditingController();
-
   bool p_isChecked = false;
-
-  int _current_index = 0;
-
-
-  personalInfoData get personalinfodata => widget.personalinfodata;
 
   @override
   void initState() {
-    univController.text = personalinfodata.univ;
-    majorController.text = personalinfodata.major;
-    gpaController.text = personalinfodata.gpa.toString();
-    ageController.text = personalinfodata.age.toString();
-    genderController.text = personalinfodata.gender.toString();
+    univController = TextEditingController();
+    majorController = TextEditingController();
+    gpaController = TextEditingController();
+    ageController = TextEditingController();
+    genderController = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    univController.dispose();
+    majorController.dispose();
+    gpaController.dispose();
+    ageController.dispose();
+    genderController.dispose();
+    super.dispose();
+  }
+
+  CollectionReference user = FirebaseFirestore.instance
+      .collection('${FirebaseAuth.instance.currentUser?.email}');
+
+  Future<void> _UpdateUser() {
+    return user.doc('PersonalInfo').set({
+      'univ': univController.text,
+      'major': majorController.text,
+      'gpa': gpaController.text,
+      'age': ageController.text,
+      'gender': genderController.text,
+      'p_isChecked': p_isChecked,
+      'email': FirebaseAuth.instance.currentUser!.email,
+    });
   }
 
   @override
@@ -48,7 +65,9 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.check_rounded),
-            onPressed: () {},
+            onPressed: () {
+              _UpdateUser();
+            },
           ),
         ],
       ),
@@ -230,42 +249,6 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
             )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 12,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _current_index,
-        onTap: (idx) {
-          setState(() {
-            _current_index = idx;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: '매칭',
-            icon: Icon(
-              Icons.find_replace,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '이력서',
-            icon: Icon(
-              Icons.description,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '면접 기록',
-            icon: Icon(
-              Icons.video_file,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '내 정보',
-            icon: Icon(
-              Icons.person,
-            ),
-          ),
-        ],
       ),
     );
   }

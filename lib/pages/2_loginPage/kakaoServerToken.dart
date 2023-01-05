@@ -4,13 +4,13 @@ import 'package:interview_link/pages/2_loginPage/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 
 
-class mainViewModel {
+class KakaoServerToken {
   final _firebaseAuthDataSource = FirebaseAuthRemoteDataSource();
   final SocialLogin _socialLogin;
   bool isLogined = false;
   kakao.User? user;
 
-  mainViewModel(this._socialLogin);
+  KakaoServerToken(this._socialLogin);
 
   Future login() async {
     isLogined = await _socialLogin.login();

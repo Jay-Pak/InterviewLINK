@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import '../2_loginPage/google_login.dart';
 import '../2_loginPage/kakao_login.dart';
-import '../2_loginPage/mainViewModel.dart';
+import '../2_loginPage/kakaoServerToken.dart';
 
 
 class MyInformation extends StatefulWidget {
@@ -11,7 +12,8 @@ class MyInformation extends StatefulWidget {
 }
 
 class _MyInformation extends State<MyInformation> {
-  mainViewModel viewModel = mainViewModel(kakaoLogin());
+  KakaoServerToken viewModel = KakaoServerToken(KakaoLogin());
+  final GoogleLogin _googleSignIn = GoogleLogin();
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +126,7 @@ class _MyInformation extends State<MyInformation> {
                 trailing: IconButton(
                   onPressed: () async {
                     await viewModel.logout();
+                    await _googleSignIn.signOut();
                     setState(() {});
                   },
                   icon: const Icon(Icons.navigate_next),

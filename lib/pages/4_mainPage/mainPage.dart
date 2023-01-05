@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:interview_link/pages/12_interviewHistory/interviewHistory.dart';
 import 'package:interview_link/pages/14_myInformation/myInformation.dart';
-import 'package:interview_link/pages/3_personalInformationPage/personalInfoData.dart';
 import 'package:interview_link/pages/6_resume/resumePage.dart';
+
+import '../3_personalInformationPage/personalInformationPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class _MainPageState extends State<MainPage> {
           title: const Text("User 님"),
         ),
         body: getBodyPage(),
+        // getBodyPage(),
         bottomNavigationBar: buildBottomNavigationBar());
   }
 

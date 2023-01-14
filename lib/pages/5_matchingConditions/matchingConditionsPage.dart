@@ -1,47 +1,64 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:interview_link/pages/5_matchingConditions/matchingConditionsData.dart';
+import 'package:interview_link/pages/4_mainPage/mainPage.dart';
 
-class matchingConditionsPage extends StatefulWidget {
-  final matchingConditionsData matchingConditionData;
-
-  const matchingConditionsPage({Key? key, required this.matchingConditionData})
-      : super(key: key);
+class MatchingConditionsPage extends StatefulWidget {
+  const MatchingConditionsPage({Key? key}) : super(key: key);
 
   @override
-  State<matchingConditionsPage> createState() =>
-      _matchingConditionsPageState();
+  State<MatchingConditionsPage> createState() => _MatchingConditionsPageState();
 }
 
-class _matchingConditionsPageState extends State<matchingConditionsPage> {
+class _MatchingConditionsPageState extends State<MatchingConditionsPage> {
   TextEditingController companyController = TextEditingController();
   TextEditingController fieldController = TextEditingController();
   TextEditingController resumeController = TextEditingController();
 
-  int _current_index = 0;
-
-  matchingConditionsData get matchingConditionsdata => widget.matchingConditionData;
-
   @override
   void initState() {
-    companyController.text = matchingConditionsdata.company;
-    fieldController.text = matchingConditionsdata.field;
-    resumeController.text = matchingConditionsdata.resume;
+    companyController = TextEditingController();
+    fieldController = TextEditingController();
+    resumeController = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    companyController.dispose();
+    fieldController.dispose();
+    resumeController.dispose();
+    super.dispose();
+  }
+
+
+
+  Future<void> _UpdateUser() async {
+    return FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser?.email}').doc('MatchingConditions').set({
+      'company': companyController.text,
+      'field': fieldController.text,
+      'resumeController': resumeController.text,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
         title: const Text("나의 지원 정보"),
         actions: [
           IconButton(
             icon: const Icon(Icons.check_rounded),
-            onPressed: () {},
+            onPressed: () {
+              _UpdateUser();
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
@@ -55,7 +72,7 @@ class _matchingConditionsPageState extends State<matchingConditionsPage> {
                   color: Colors.grey.shade300,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   margin:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
                     controller: companyController,
                     decoration: const InputDecoration(
@@ -86,7 +103,7 @@ class _matchingConditionsPageState extends State<matchingConditionsPage> {
                   color: Colors.grey.shade300,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   margin:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
                     controller: fieldController,
                     decoration: const InputDecoration(
@@ -117,7 +134,7 @@ class _matchingConditionsPageState extends State<matchingConditionsPage> {
                   color: Colors.grey.shade300,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   margin:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: TextField(
                     controller: resumeController,
                     decoration: const InputDecoration(
@@ -143,42 +160,6 @@ class _matchingConditionsPageState extends State<matchingConditionsPage> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 12,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _current_index,
-        onTap: (idx) {
-          setState(() {
-            _current_index = idx;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: '매칭',
-            icon: Icon(
-              Icons.find_replace,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '이력서',
-            icon: Icon(
-              Icons.description,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '면접 기록',
-            icon: Icon(
-              Icons.video_file,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '내 정보',
-            icon: Icon(
-              Icons.person,
-            ),
-          ),
-        ],
       ),
     );
   }

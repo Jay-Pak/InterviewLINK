@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:interview_link/main.dart';
 
 class PersonalInformationPage extends StatefulWidget {
   const PersonalInformationPage({Key? key}) : super(key: key);
+
+
 
   @override
   State<PersonalInformationPage> createState() =>
@@ -38,11 +41,11 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
     super.dispose();
   }
 
-  CollectionReference user = FirebaseFirestore.instance
+  final CollectionReference _user = FirebaseFirestore.instance
       .collection('${FirebaseAuth.instance.currentUser?.email}');
 
   Future<void> _UpdateUser() {
-    return user.doc('PersonalInfo').set({
+    return _user.doc('PersonalInfo').set({
       'univ': univController.text,
       'major': majorController.text,
       'gpa': gpaController.text,
@@ -55,18 +58,20 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
 
   @override
   Widget build(BuildContext context) {
+    MyAppState? myApp = context.findAncestorStateOfType();
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new),
+        //   onPressed: () {},
+        // ),
         title: const Text("인적사항"),
         actions: [
           IconButton(
             icon: const Icon(Icons.check_rounded),
             onPressed: () {
               _UpdateUser();
+              myApp!.setState(() {});
             },
           ),
         ],
@@ -252,4 +257,5 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
       ),
     );
   }
+
 }

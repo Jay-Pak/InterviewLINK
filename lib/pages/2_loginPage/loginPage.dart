@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -5,6 +6,7 @@ import 'package:interview_link/pages/2_loginPage/google_login.dart';
 import 'package:interview_link/pages/2_loginPage/google_setting.dart';
 import 'package:interview_link/pages/2_loginPage/kakao_login.dart' as kakao;
 import 'package:interview_link/pages/2_loginPage/kakaoServerToken.dart';
+import 'package:interview_link/pages/3_personalInformationPage/personalInformationPage.dart';
 
 import '../14_myInformation/myInformation.dart';
 
@@ -18,6 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   KakaoServerToken viewModel = KakaoServerToken(kakao.KakaoLogin());
   final GoogleLogin _googleSignIn = GoogleLogin();
+  var list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
         InkWell(
           onTap: () async {
             await viewModel.login();
-            // FirebaseAuth.instance.currentUser!.uid;
             setState(() {});
           },
           child: Container(
@@ -102,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 10,
         ),
         InkWell(
-          onTap: (){
+          onTap: () {
             _googleSignIn.signInWithGoogle();
             setState(() {});
           },
@@ -151,8 +153,29 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-        )
+        ),
       ]),
     );
+  }
+
+  bool isExist(docID) {
+    bool check = false;
+
+    FirebaseFirestore.instance
+        .collection('${FirebaseAuth.instance.currentUser!.email}')
+        .doc(docID)
+        .get()
+        .then(
+      (value) {
+        if (value.exists == null) {
+          check = false;
+          print('check : ${check}');
+        } else {
+          check = true;
+          print('check : ${check}');
+        }
+      },
+    );
+    return check;
   }
 }

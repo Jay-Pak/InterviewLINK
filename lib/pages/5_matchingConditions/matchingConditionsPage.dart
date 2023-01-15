@@ -48,12 +48,6 @@ class _MatchingConditionsPageState extends State<MatchingConditionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios_new),
-        //   onPressed: () {
-        //     Navigator.pop(context);
-        //   },
-        // ),
         title: const Text("나의 지원 정보"),
         actions: [
           IconButton(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:interview_link/data/globalVariables.dart';
 import 'package:interview_link/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -15,13 +16,14 @@ import 'pages/2_loginPage/kakao_login.dart';
 import 'pages/2_loginPage/loginPage.dart';
 import 'components/link_color.dart';
 
+var globalVariable = GlobalVariable(currentIndex: 0);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   kakao.KakaoSdk.init(nativeAppKey: '323269abd66eb75436b50ec1d82ca942');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   runZonedGuarded(() async {
     runApp(MyApp());
   }, (error, stackTrace) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:interview_link/main.dart';
+import 'package:interview_link/pages/7_resumeOpenPage/resumeOpenPage.dart';
 
 class ResumePage extends StatefulWidget {
   const ResumePage({Key? key}) : super(key: key);
@@ -11,6 +13,9 @@ class _ResumePageState extends State<ResumePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: globalVariable.currentIndex == 0
+          ? AppBar(title: const Text("이력서"))
+          : null,
       body: ListView.builder(
         itemCount: 1,
         itemBuilder: (BuildContext context, index) {
@@ -27,12 +32,11 @@ class _ResumePageState extends State<ResumePage> {
             width: MediaQuery.of(context).size.width,
             child: Row(
               children: [
-                Flexible(
-                  child: Text(
-                    '1. 삼성전자 반도체연구소 공정설계',
-                    textAlign: TextAlign.start,
-                  ),
+                Text(
+                  '1. 삼성전자 반도체연구소 공정설계',
+                  textAlign: TextAlign.start,
                 ),
+                const Spacer(),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(Icons.edit_note),
@@ -41,6 +45,12 @@ class _ResumePageState extends State<ResumePage> {
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (builder) => ResumeOpenPage()));
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -1,33 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class resumeOpenPage extends StatefulWidget {
-  resumeOpenPage({Key? key}) : super(key: key);
+class ResumeOpenPage extends StatefulWidget {
+  ResumeOpenPage({Key? key}) : super(key: key);
 
   @override
-  State<resumeOpenPage> createState() => _resumeOpenPageState();
+  State<ResumeOpenPage> createState() => _ResumeOpenPageState();
 }
 
-class _resumeOpenPageState extends State<resumeOpenPage> {
-  int _current_index = 0;
+class _ResumeOpenPageState extends State<ResumeOpenPage> {
 
   TextEditingController resumeTitleController = TextEditingController();
   List<TextEditingController> questionController = [for(int i = 0; i < 5; i++) TextEditingController()];
   List<TextEditingController> contentController = [for(int i = 0; i < 5; i++) TextEditingController()];
 
+  DocumentReference<Map<String, dynamic>> _resume = FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser?.email}').doc('MatchingInfo');
+
+  _updateResume(int index){
+    for(int i = 0; i < index; i++){
+      return _resume.collection('Resume#${i+1}').doc(questionController[i].text).set({
+        "content" : contentController[i].text
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
-        ),
         title: const Text("이력서 쓰기"),
         actions: [
           IconButton(
             icon: const Icon(Icons.check_rounded),
-            onPressed: () {},
+            onPressed: () {
+              _updateResume(5);
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
@@ -104,7 +114,7 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 4),
                               child: TextField(
-                                maxLines: 100,
+                                maxLines: 150,
                                 controller: contentController[i-1],
                                 decoration: const InputDecoration(
                                   hintText: "내용을 입력해주세요.",
@@ -122,42 +132,6 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
                 },
               );
             }).toList(),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 12,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _current_index,
-        onTap: (idx) {
-          setState(() {
-            _current_index = idx;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: '매칭',
-            icon: Icon(
-              Icons.find_replace,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '이력서',
-            icon: Icon(
-              Icons.description,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '면접 기록',
-            icon: Icon(
-              Icons.video_file,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: '내 정보',
-            icon: Icon(
-              Icons.person,
-            ),
           ),
         ],
       ),

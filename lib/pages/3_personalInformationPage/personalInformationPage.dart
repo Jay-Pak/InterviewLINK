@@ -44,7 +44,7 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
   final CollectionReference _user = FirebaseFirestore.instance
       .collection('${FirebaseAuth.instance.currentUser?.email}');
 
-  Future<void> _UpdateUser() {
+  Future<void> _updateUser() {
     return _user.doc('PersonalInfo').set({
       'univ': univController.text,
       'major': majorController.text,
@@ -70,7 +70,7 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
           IconButton(
             icon: const Icon(Icons.check_rounded),
             onPressed: () {
-              _UpdateUser();
+              _updateUser();
               myApp!.setState(() {});
             },
           ),

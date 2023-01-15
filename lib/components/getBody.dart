@@ -1,104 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:interview_link/main.dart';
 import 'package:interview_link/pages/12_interviewHistory/interviewHistory.dart';
 import 'package:interview_link/pages/14_myInformation/myInformation.dart';
 import 'package:interview_link/pages/5_matchingConditions/matchingConditionsPage.dart';
 import 'package:interview_link/pages/6_resume/resumePage.dart';
 
-class GetPages extends StatefulWidget {
-  const GetPages({Key? key}) : super(key: key);
+class GetBody extends StatefulWidget {
+  const GetBody({Key? key}) : super(key: key);
 
   @override
-  State<GetPages> createState() => _GetPagesState();
+  State<GetBody> createState() => _GetBodyState();
 }
 
-class _GetPagesState extends State<GetPages> {
-  int _currentIndex = 0;
+class _GetBodyState extends State<GetBody> {
 
-  get currentIndex => _currentIndex;
-
-  set currentIndex(currentIndex){
-    _currentIndex = currentIndex;
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: getBodyPage(),
-      bottomNavigationBar: buildBottomNavigationBar(),
-      floatingActionButton: buildFloatingButton(),
-    );
-  }
-
-  AppBar? buildAppBar() {
-    if (_currentIndex == 0) {
-      return AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.person),
-          onPressed: () {},
-        ),
-        title: const Text("User 님"),
-      );
-    } else if (_currentIndex == 1) {
-      return AppBar(
-        title: const Text("이력서"),
-      );
-    } else if (_currentIndex == 2) {
-      return AppBar(
-        title: const Text("면접 기록"),
-      );
-    } else if (_currentIndex == 3) {
-      return AppBar(
-        title: const Text("내 정보"),
-      );
-    }
-  }
-
-  BottomNavigationBar buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      selectedFontSize: 12,
-      type: BottomNavigationBarType.fixed,
-      items: const [
-        BottomNavigationBarItem(
-          label: '매칭',
-          icon: Icon(
-            Icons.find_replace,
-          ),
-        ),
-        BottomNavigationBarItem(
-          label: '이력서',
-          icon: Icon(
-            Icons.description,
-          ),
-        ),
-        BottomNavigationBarItem(
-          label: '면접 기록',
-          icon: Icon(
-            Icons.video_file,
-          ),
-        ),
-        BottomNavigationBarItem(
-          label: '내 정보',
-          icon: Icon(
-            Icons.person,
-          ),
-        ),
-      ],
-      currentIndex: _currentIndex,
-      onTap: (idx) {
-        setState(() {
-          _currentIndex = idx;
-        });
-      },
-    );
+    return getBodyPage();
   }
 
   Widget getBodyPage() {
-    if (_currentIndex == 0) {
+    if (globalVariable.currentIndex == 0) {
       return buildMainPage();
-    } else if (_currentIndex == 1) {
+    } else if (globalVariable.currentIndex == 1) {
       return ResumePage();
-    } else if (_currentIndex == 2) {
+    } else if (globalVariable.currentIndex == 2) {
       return InterviewHistoryPage();
     } else {
       return MyInformation();
@@ -272,12 +199,5 @@ class _GetPagesState extends State<GetPages> {
         ],
       );
     });
-  }
-
-  FloatingActionButton? buildFloatingButton() {
-    if (_currentIndex == 1) {
-      return FloatingActionButton(
-        onPressed: () {}, child: const Icon(Icons.add),);
-    }
   }
 }

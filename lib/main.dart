@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:interview_link/data/globalVariables.dart';
 import 'package:interview_link/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -17,8 +16,8 @@ import 'pages/2_loginPage/loginPage.dart';
 import 'components/link_color.dart';
 
 void main() async {
-  kakao.KakaoSdk.init(nativeAppKey: '323269abd66eb75436b50ec1d82ca942');
   WidgetsFlutterBinding.ensureInitialized();
+  kakao.KakaoSdk.init(nativeAppKey: '323269abd66eb75436b50ec1d82ca942');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -41,19 +40,6 @@ class MyAppState extends State<MyApp> {
   final viewModel = KakaoServerToken(KakaoLogin());
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
-  Future<bool> getFBdata() async {
-    var result = await FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser!.email}').doc('PersonalInfo').get();
-    // print(result.data()!.values);
-    return result.exists;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getFBdata();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,54 +54,32 @@ class MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: Builder(builder: (context) {
-        return StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return LoginPage();
-            } else {
-              FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser!.email}').doc('PersonalInfo').set({'gloVar' : 0});
-              print(getFBdata().runtimeType);
-              print(Future.value(false).runtimeType);
-              if(getFBdata() == Future.value(false)){
-                return PersonalInformationPage();
-              }else{
-                return MainPage();
+      home: Builder(
+        builder: (context) {
+          return StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot2) {
+              if (!snapshot2.hasData) {
+                return LoginPage();
               }
-              // getFBdata();
-
-            }
-          },
-        );
-      }),
+              return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection('${FirebaseAuth.instance.currentUser?.email}')
+                    .snapshots(),
+                builder: (ctx, snapshot1) {
+                  if (snapshot1.data != null) {
+                    if (snapshot1.data!.docs.isEmpty) {
+                      return PersonalInformationPage();
+                    }
+                  }
+                  return MainPage();
+                },
+              );
+            },
+          );
+        },
+      ),
       navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
     );
   }
 }
-
-// var jaeho = await FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser!.email}').doc('PersonalInfo').get();
-// print(snapshot.data() == null);
-// if(snapshot.data() == null){
-// Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalInformationPage()));
-
-// bool isExist(docID) {
-//   bool check = false;
-//
-//   FirebaseFirestore.instance
-//       .collection('${FirebaseAuth.instance.currentUser!.email}')
-//       .doc(docID)
-//       .get()
-//       .then(
-//     (value) {
-//       if (value.exists == false) {
-//         check = false;
-//         print('check : ${check}');
-//       } else {
-//         check = true;
-//         print('check : ${check}');
-//       }
-//     },
-//   );
-//   return check;
-// }

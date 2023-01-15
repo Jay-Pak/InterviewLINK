@@ -14,6 +14,12 @@ class GetPages extends StatefulWidget {
 class _GetPagesState extends State<GetPages> {
   int _currentIndex = 0;
 
+  get currentIndex => _currentIndex;
+
+  set currentIndex(currentIndex){
+    _currentIndex = currentIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

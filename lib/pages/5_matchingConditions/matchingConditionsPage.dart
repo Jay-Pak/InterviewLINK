@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:interview_link/pages/4_mainPage/mainPage.dart';
+import 'package:interview_link/pages/6_resume/resumePage.dart';
 
 class MatchingConditionsPage extends StatefulWidget {
   const MatchingConditionsPage({Key? key}) : super(key: key);
@@ -13,13 +13,14 @@ class MatchingConditionsPage extends StatefulWidget {
 class _MatchingConditionsPageState extends State<MatchingConditionsPage> {
   TextEditingController companyController = TextEditingController();
   TextEditingController fieldController = TextEditingController();
-  TextEditingController resumeController = TextEditingController();
+
+  // TextEditingController resumeController = TextEditingController();
 
   @override
   void initState() {
     companyController = TextEditingController();
     fieldController = TextEditingController();
-    resumeController = TextEditingController();
+    // resumeController = TextEditingController();
     super.initState();
   }
 
@@ -27,17 +28,19 @@ class _MatchingConditionsPageState extends State<MatchingConditionsPage> {
   void dispose() {
     companyController.dispose();
     fieldController.dispose();
-    resumeController.dispose();
+    // resumeController.dispose();
     super.dispose();
   }
 
 
-
   Future<void> _UpdateUser() async {
-    return FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser?.email}').doc('MatchingConditions').set({
+    return FirebaseFirestore.instance.collection(
+        '${FirebaseAuth.instance.currentUser?.email}')
+        .doc('MatchingConditions')
+        .set({
       'company': companyController.text,
       'field': fieldController.text,
-      'resumeController': resumeController.text,
+      // 'resumeController': resumeController.text,
     });
   }
 
@@ -62,104 +65,102 @@ class _MatchingConditionsPageState extends State<MatchingConditionsPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            Column(
-              children: [
-                Container(
-                  color: Colors.grey.shade300,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  child: TextField(
-                    controller: companyController,
-                    decoration: const InputDecoration(
-                      hintText: "* 지원회사를 입력해주세요.",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                    ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Column(
+            children: [
+              Container(
+                color: Colors.grey.shade300,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                margin:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                child: TextField(
+                  controller: companyController,
+                  decoration: const InputDecoration(
+                    hintText: "* 지원회사를 입력해주세요.",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(horizontal: 26),
-                  child: const Text(
-                    "필수 입력 사항입니다.",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10,
-                    ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 26),
+                child: const Text(
+                  "필수 입력 사항입니다.",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Column(
-              children: [
-                Container(
-                  color: Colors.grey.shade300,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  child: TextField(
-                    controller: fieldController,
-                    decoration: const InputDecoration(
-                      hintText: "* 지원직무를 입력해주세요.",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                    ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            children: [
+              Container(
+                color: Colors.grey.shade300,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                margin:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                child: TextField(
+                  controller: fieldController,
+                  decoration: const InputDecoration(
+                    hintText: "* 지원직무를 입력해주세요.",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(horizontal: 26),
-                  child: const Text(
-                    "필수 입력 사항입니다.",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10,
-                    ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 26),
+                child: const Text(
+                  "필수 입력 사항입니다.",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Column(
-              children: [
-                Container(
-                  color: Colors.grey.shade300,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  child: TextField(
-                    controller: resumeController,
-                    decoration: const InputDecoration(
-                      hintText: "* 이력서를 선택/입력해주세요.",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                    ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.grey.shade300,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 10, vertical: 4),
+                child: TextButton(
+                  style: const ButtonStyle(alignment: Alignment.centerLeft),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (builder) => ResumePage()));
+                  },
+                  child: const Text('* 이력서를 선택/입력해주세요.',
+                      style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.normal)),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 26),
+                child: const Text(
+                  "필수 입력 사항입니다.",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(horizontal: 26),
-                  child: const Text(
-                    "필수 입력 사항입니다.",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

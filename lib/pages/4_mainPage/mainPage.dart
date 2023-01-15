@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interview_link/components/getPages.dart';
+import 'package:interview_link/components/getPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -9,7 +9,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var selectedResume;
 
   @override
   Widget build(BuildContext context) {

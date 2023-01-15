@@ -12,15 +12,19 @@ class ResumeOpenPage extends StatefulWidget {
 
 class _ResumeOpenPageState extends State<ResumeOpenPage> {
 
+  CarouselController controller = CarouselController();
+
   TextEditingController resumeTitleController = TextEditingController();
   List<TextEditingController> questionController = [for(int i = 0; i < 5; i++) TextEditingController()];
   List<TextEditingController> contentController = [for(int i = 0; i < 5; i++) TextEditingController()];
 
-  DocumentReference<Map<String, dynamic>> _resume = FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser?.email}').doc('MatchingInfo');
+  DocumentReference<Map<String, dynamic>> _resume = FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser?.email}').doc('MatchingConditions');
 
   _updateResume(int index){
     for(int i = 0; i < index; i++){
-      return _resume.collection('Resume#${i+1}').doc(questionController[i].text).set({
+      _resume.collection('ResumeList').doc(resumeTitleController.text).collection('Question#${i+1}').doc(questionController[i].text).set({
+        // "title" : resumeTitleController.text,
+        // "question" : questionController[i].text,
         "content" : contentController[i].text
       });
     }
@@ -63,7 +67,7 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
             ),
           ),
           CarouselSlider(
-            options: CarouselOptions(height: 600.0, viewportFraction: 0.9),
+            options: CarouselOptions(height: 600.0, viewportFraction: 0.9, enableInfiniteScroll: false),
             items: [1, 2, 3, 4, 5].map((i) {
               return Builder(
                 builder: (BuildContext context) {
@@ -83,7 +87,6 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                         Column(
                           children: [
                             Container(
-                              height: 30,
                               width: 320,
                               color: Colors.grey.shade300,
                               padding:
@@ -91,6 +94,7 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 4),
                               child: TextField(
+                                maxLines: 5,
                                 controller: questionController[i-1],
                                 decoration: InputDecoration(
                                   hintText: "항목 $i : 자소서 $i 질문을 입력해주세요.",
@@ -106,7 +110,6 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                         Column(
                           children: [
                             Container(
-                              height: 600,
                               width: 320,
                               color: Colors.grey.shade300,
                               padding:
@@ -114,7 +117,7 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 4),
                               child: TextField(
-                                maxLines: 150,
+                                maxLines: 100,
                                 controller: contentController[i-1],
                                 decoration: const InputDecoration(
                                   hintText: "내용을 입력해주세요.",

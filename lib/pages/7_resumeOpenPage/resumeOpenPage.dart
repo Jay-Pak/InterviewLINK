@@ -1,45 +1,113 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart';
 
-class ResumeOpenPage extends StatefulWidget {
-  ResumeOpenPage({Key? key}) : super(key: key);
+class resumeOpenPage extends StatefulWidget {
+  resumeOpenPage({Key? key}) : super(key: key);
 
   @override
-  State<ResumeOpenPage> createState() => _ResumeOpenPageState();
+  State<resumeOpenPage> createState() => _resumeOpenPageState();
 }
 
-class _ResumeOpenPageState extends State<ResumeOpenPage> {
-
-  CarouselController controller = CarouselController();
-
+class _resumeOpenPageState extends State<resumeOpenPage> {
+  CollectionReference resume = FirebaseFirestore.instance.collection('Resume');
   TextEditingController resumeTitleController = TextEditingController();
-  List<TextEditingController> questionController = [for(int i = 0; i < 5; i++) TextEditingController()];
-  List<TextEditingController> contentController = [for(int i = 0; i < 5; i++) TextEditingController()];
+  List<TextEditingController> questionController = [
+    for (int i = 0; i < 10; i++) TextEditingController()
+  ];
+  List<TextEditingController> contentController = [
+    for (int i = 0; i < 10; i++) TextEditingController()
+  ];
+  TextEditingController getnumberController = TextEditingController();
 
-  DocumentReference<Map<String, dynamic>> _resume = FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser?.email}').doc('MatchingConditions');
 
-  _updateResume(int index){
-    for(int i = 0; i < index; i++){
-      _resume.collection('ResumeList').doc(resumeTitleController.text).collection('Question#${i+1}').doc(questionController[i].text).set({
-        // "title" : resumeTitleController.text,
-        // "question" : questionController[i].text,
-        "content" : contentController[i].text
-      });
-    }
+  CollectionReference user = FirebaseFirestore.instance
+      .collection('${FirebaseAuth.instance.currentUser?.email}');
+  CollectionReference Resumelist = FirebaseFirestore.instance
+      .collection('${FirebaseAuth.instance.currentUser?.email}')
+      .doc('Resume')
+      .collection('Resumelist');
+
+  int _currentIndex = 0;
+  int getnumber = 2;
+
+
+  Future<void> _Update() {
+    return user
+        .doc('Resume')
+        .collection('Resumelist')
+        .doc('${resumeTitleController.text}')
+        .set({
+      'title': resumeTitleController.text,
+      for (int i = 0; i < getnumber!; i++) 'question$i': questionController[i].text,
+      for (int i = 0; i < getnumber!; i++) 'content$i': contentController[i].text,
+    });
   }
 
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero, () {
+      _resumeDialog();
+    });
+  }
+
+  Future<void> _resumeDialog() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("자기소개서의 문항 갯수를 입력해주세요"),
+            content: TextField(
+              keyboardType: TextInputType.number,
+              controller: getnumberController,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  getnumber = int.parse(getnumberController.text);
+                  Navigator.pop(context);
+                  setState(() {
+                    BuildContext context;
+                  });
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        });
+  }
+
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+
+  {
+  final List getnumberlist = List.generate(getnumber, (index) => index +1);
     return Scaffold(
       appBar: AppBar(
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new),
+        //   onPressed: () {},
+        // ),
         title: const Text("이력서 쓰기"),
         actions: [
           IconButton(
             icon: const Icon(Icons.check_rounded),
             onPressed: () {
-              _updateResume(5);
+              _Update();
               Navigator.pop(context);
             },
           ),
@@ -60,15 +128,24 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
               decoration: const InputDecoration(
                 hintText: "이력서 제목을 입력해주세요.",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
               ),
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
           CarouselSlider(
-            options: CarouselOptions(height: 600.0, viewportFraction: 0.9, enableInfiniteScroll: false),
-            items: [1, 2, 3, 4, 5].map((i) {
+            options: CarouselOptions(
+                onPageChanged: (index, reason) {
+                  _currentIndex = index;
+                  setState(() {});
+                },
+                height: 600.0,
+                viewportFraction: 0.9,
+                enableInfiniteScroll: false),
+            items: getnumberlist.map((i) {
               return Builder(
                 builder: (BuildContext context) {
                   return SingleChildScrollView(
@@ -87,18 +164,18 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                         Column(
                           children: [
                             Container(
+                              height: 100,
                               width: 320,
                               color: Colors.grey.shade300,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 4),
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
                               child: TextField(
-                                maxLines: 5,
-                                controller: questionController[i-1],
+                                controller: questionController[i - 1],
                                 decoration: InputDecoration(
                                   hintText: "항목 $i : 자소서 $i 질문을 입력해주세요.",
-                                  hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
+                                  hintStyle: const TextStyle(
+                                      color: Colors.grey, fontSize: 12),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                 ),
@@ -106,22 +183,30 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
+                        DotsIndicator(
+                          dotsCount: getnumber,
+                          // dotsCount: int.parse(listnumController.text),
+                          position: _currentIndex.toDouble(),
+                          decorator: DotsDecorator(
+                            spacing: const EdgeInsets.all(10.0),
+                          ),
+                        ),
                         Column(
                           children: [
                             Container(
+                              height: 300,
                               width: 320,
                               color: Colors.grey.shade300,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 4),
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
                               child: TextField(
                                 maxLines: 100,
-                                controller: contentController[i-1],
+                                controller: contentController[i - 1],
                                 decoration: const InputDecoration(
                                   hintText: "내용을 입력해주세요.",
-                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                 ),

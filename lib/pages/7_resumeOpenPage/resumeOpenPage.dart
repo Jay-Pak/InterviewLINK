@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class ResumeOpenPage extends StatefulWidget {
   ResumeOpenPage({Key? key}) : super(key: key);
@@ -11,21 +11,39 @@ class ResumeOpenPage extends StatefulWidget {
 }
 
 class _ResumeOpenPageState extends State<ResumeOpenPage> {
-
-  CarouselController controller = CarouselController();
+  PageController pagecontroller =
+      PageController(viewportFraction: 1, initialPage: 0);
+  int idx = 5;
+  int activeidx = 0;
 
   TextEditingController resumeTitleController = TextEditingController();
-  List<TextEditingController> questionController = [for(int i = 0; i < 5; i++) TextEditingController()];
-  List<TextEditingController> contentController = [for(int i = 0; i < 5; i++) TextEditingController()];
 
-  DocumentReference<Map<String, dynamic>> _resume = FirebaseFirestore.instance.collection('${FirebaseAuth.instance.currentUser?.email}').doc('MatchingConditions');
+  // TextEditingController questionController = TextEditingController();
+  // TextEditingController contentController = TextEditingController();
 
-  _updateResume(int index){
-    for(int i = 0; i < index; i++){
-      _resume.collection('ResumeList').doc(resumeTitleController.text).collection('Question#${i+1}').doc(questionController[i].text).set({
-        // "title" : resumeTitleController.text,
+  List<TextEditingController> questionController = [
+    for (int i = 0; i < 5; i++) TextEditingController()
+  ];
+
+  List<TextEditingController> contentController = [
+    for (int i = 0; i < 5; i++) TextEditingController()
+  ];
+
+  DocumentReference<Map<String, dynamic>> _resume = FirebaseFirestore.instance
+      .collection('${FirebaseAuth.instance.currentUser?.email}')
+      .doc('MatchingConditions');
+
+  _updateResume(int index) {
+    for (int i = 0; i < index; i++) {
+      _resume
+          .collection('ResumeList')
+          .doc(resumeTitleController.text)
+          .collection('Question#${i + 1}')
+          .doc('12345')
+          .set({
+        "title": resumeTitleController.text,
         // "question" : questionController[i].text,
-        "content" : contentController[i].text
+        // "content": contentController[i].text,
       });
     }
   }
@@ -39,104 +57,100 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
           IconButton(
             icon: const Icon(Icons.check_rounded),
             onPressed: () {
-              _updateResume(5);
+              // _updateResume(5);
               Navigator.pop(context);
             },
           ),
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            color: Colors.grey.shade300,
-            height: 30,
-            width: 320,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TextField(
-              controller: resumeTitleController,
-              decoration: const InputDecoration(
-                hintText: "이력서 제목을 입력해주세요.",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
               ),
-            ),
+              Container(
+                color: Colors.grey.shade300,
+                height: 30,
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: TextField(
+                  controller: resumeTitleController,
+                  decoration: const InputDecoration(
+                    hintText: "이력서 제목을 입력해주세요.",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height - 142,
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                child: PageView.builder(
+                  itemCount: 5,
+                  pageSnapping: true,
+                  controller: pagecontroller,
+                  onPageChanged: (page) {
+                    setState(
+                      () {
+                        activeidx = page;
+                      },
+                    );
+                  },
+                  itemBuilder: (context, pagePosition) {
+                    return ListView.builder(
+                      itemCount: 3,
+                      itemBuilder: (ctx, idx) {
+                        if (idx == 0) {
+                          return TextField(
+                            maxLines: 5,
+                            controller: questionController[pagePosition],
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey.shade300,
+                              hintText:
+                                  "항목 ${pagePosition + 1} : 자소서 ${pagePosition + 1} 질문을 입력해주세요.",
+                              hintStyle: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                            ),
+                          );
+                        } else if (idx == 1) {
+                          return DotsIndicator(
+                            dotsCount: 5,
+                            position: activeidx.toDouble(),
+                          );
+                        } else if (idx == 2) {
+                          return TextField(
+                            maxLines: 25,
+                            controller: contentController[pagePosition],
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey.shade300,
+                              hintText: "내용을 입력해주세요",
+                              hintStyle: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                            ),
+                          );
+                        }
+                        return Text('error');
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-          CarouselSlider(
-            options: CarouselOptions(height: 600.0, viewportFraction: 0.9, enableInfiniteScroll: false),
-            items: [1, 2, 3, 4, 5].map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              color: Colors.grey.shade300,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Column(
-                          children: [
-                            Container(
-                              width: 320,
-                              color: Colors.grey.shade300,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 4),
-                              child: TextField(
-                                maxLines: 5,
-                                controller: questionController[i-1],
-                                decoration: InputDecoration(
-                                  hintText: "항목 $i : 자소서 $i 질문을 입력해주세요.",
-                                  hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Column(
-                          children: [
-                            Container(
-                              width: 320,
-                              color: Colors.grey.shade300,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 4),
-                              child: TextField(
-                                maxLines: 100,
-                                controller: contentController[i-1],
-                                decoration: const InputDecoration(
-                                  hintText: "내용을 입력해주세요.",
-                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interview_link/main.dart';
 import 'package:interview_link/pages/7_resumeOpenPage/resumeOpenPage.dart';
+import 'package:flutter/cupertino.dart';
 
 class ResumePage extends StatefulWidget {
   const ResumePage({Key? key}) : super(key: key);
@@ -10,6 +11,25 @@ class ResumePage extends StatefulWidget {
 }
 
 class _ResumePageState extends State<ResumePage> {
+  List<int> numberOfResume = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  int selectedResumeIndex = 0;
+
+  void _showDialog(Widget child) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => Container(
+        height: 216,
+        padding: EdgeInsets.only(top: 6),
+        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.width),
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +68,9 @@ class _ResumePageState extends State<ResumePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (builder) => ResumeOpenPage()));
+
+          Navigator.push(context,
+              MaterialPageRoute(builder: (builder) => ResumeOpenPage()));
         },
         child: const Icon(Icons.add),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interview_link/pages/15_FAQ/FAQ.dart';
 import '../2_loginPage/google_login.dart';
 import '../2_loginPage/kakao_login.dart';
 import '../2_loginPage/kakaoServerToken.dart';
@@ -74,7 +75,9 @@ class _MyInformation extends State<MyInformation> {
               ListTile(
                 leading: const Icon(Icons.question_answer),
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>FAQ()));
+                  },
                   icon: const Icon(Icons.navigate_next),
                 ),
                 title: const Text('자주 물어보는 질문'),

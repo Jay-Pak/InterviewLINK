@@ -31,6 +31,9 @@ class _MainPageState extends State<MainPage> {
       );
     } else if (globalVariable.currentIndex == 1) {
       return AppBar(
+        leading: Icon(
+          Icons.description,
+        ),
         title: const Text("이력서"),
       );
     } else if (globalVariable.currentIndex == 2) {

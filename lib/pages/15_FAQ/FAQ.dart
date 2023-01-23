@@ -20,7 +20,9 @@ class _FAQState extends State<FAQ> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Text("자주 물어보는 질문"),
       ),

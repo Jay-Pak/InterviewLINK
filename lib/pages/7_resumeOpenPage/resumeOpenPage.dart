@@ -6,12 +6,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart';
+import 'package:interview_link/pages/6_resume/resumePage.dart';
 
 class resumeOpenPage extends StatefulWidget {
-  resumeOpenPage({Key? key}) : super(key: key);
+  final int? getNumber;
 
+  resumeOpenPage({Key? key, required this.getNumber}) : super(key: key);
   @override
   State<resumeOpenPage> createState() => _resumeOpenPageState();
+
 }
 
 class _resumeOpenPageState extends State<resumeOpenPage> {
@@ -34,7 +37,7 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
       .collection('Resumelist');
 
   int _currentIndex = 0;
-  int getnumber = 2;
+
 
 
   Future<void> _Update() {
@@ -44,58 +47,58 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
         .doc('${resumeTitleController.text}')
         .set({
       'title': resumeTitleController.text,
-      for (int i = 0; i < getnumber!; i++) 'question$i': questionController[i].text,
-      for (int i = 0; i < getnumber!; i++) 'content$i': contentController[i].text,
+      for (int i = 0; i < getNumber; i++) 'question$i': questionController[i].text,
+      for (int i = 0; i < getNumber; i++) 'content$i': contentController[i].text,
     });
   }
 
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () {
-      _resumeDialog();
-    });
+    // Future.delayed(Duration.zero, () {
+    //   _resumeDialog();
+    // });
   }
 
-  Future<void> _resumeDialog() {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("자기소개서의 문항 갯수를 입력해주세요"),
-            content: TextField(
-              keyboardType: TextInputType.number,
-              controller: getnumberController,
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  getnumber = int.parse(getnumberController.text);
-                  Navigator.pop(context);
-                  setState(() {
-                    BuildContext context;
-                  });
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        });
-  }
+  // Future<void> _resumeDialog() {
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text("자기소개서의 문항 수를 입력해주세요"),
+  //           content: TextField(
+  //             keyboardType: TextInputType.number,
+  //             controller: getnumberController,
+  //           ),
+  //           actions: <Widget>[
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.pop(context);
+  //               },
+  //               child: const Text('Cancel'),
+  //             ),
+  //             TextButton(
+  //               onPressed: () {
+  //                 getnumber = int.parse(getnumberController.text);
+  //                 Navigator.pop(context);
+  //                 setState(() {
+  //                   BuildContext context;
+  //                 });
+  //               },
+  //               child: const Text('OK'),
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
 
   @override
   Widget build(BuildContext context)
 
   {
-  final List getnumberlist = List.generate(getnumber, (index) => index +1);
+  final List getnumberlist = List.generate(getNumber, (index) => index +1);
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(
@@ -184,7 +187,7 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
                           ],
                         ),
                         DotsIndicator(
-                          dotsCount: getnumber,
+                          dotsCount: getNumber,
                           // dotsCount: int.parse(listnumController.text),
                           position: _currentIndex.toDouble(),
                           decorator: DotsDecorator(

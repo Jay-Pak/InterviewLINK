@@ -3,3 +3,4 @@ class GlobalVariable {
 
   GlobalVariable({required this.currentIndex});
 }
+

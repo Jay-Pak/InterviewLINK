@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interview_link/components/link_color.dart';
 import 'package:interview_link/main.dart';
 import 'package:interview_link/pages/7_resumeOpenPage/resumeOpenPage.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,7 @@ class ResumePage extends StatefulWidget {
 
 class _ResumePageState extends State<ResumePage> {
   List<int> numberOfResume = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  int selectedResumeIndex = 0;
+  int _selectedUserInput = 0;
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup(
@@ -67,12 +68,71 @@ class _ResumePageState extends State<ResumePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => ResumeOpenPage()));
-        },
+        onPressed: () => _showNumberOfResume(
+          CupertinoPicker(
+            magnification: 1.22,
+            squeeze: 1.2,
+            useMagnifier: true,
+            itemExtent: 32.0,
+            onSelectedItemChanged: (int selectedItem) {
+              setState(() {
+                _selectedUserInput = selectedItem;
+              });
+            },
+            children: List<Widget>.generate(
+              numberOfResume.length,
+              (int index) {
+                return Center(
+                  child: Text(numberOfResume[index].toString()),
+                );
+              },
+            ),
+          ),
+        ),
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showNumberOfResume(Widget child) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 180,
+        padding: const EdgeInsets.only(top: 6.0),
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(onPressed: () {
+                    Navigator.pop(context);
+                  }, child: const Text("취소")),
+                  TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(Colors.white)),
+                    child: const Text("이력서 질문 갯수"),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => ResumeOpenPage(userNumberOfResume: _selectedUserInput,),
+                          ),
+                        );
+                      },
+                      child: const Text("선택")),
+                ],
+              ),
+              Expanded(child: child),
+            ],
+          ),
+        ),
       ),
     );
   }

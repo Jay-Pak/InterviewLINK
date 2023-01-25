@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ResumeOpenPage extends StatefulWidget {
-  ResumeOpenPage({Key? key}) : super(key: key);
+  ResumeOpenPage({Key? key, required this.userNumberOfResume}) : super(key: key);
+
+  final int userNumberOfResume;
 
   @override
   State<ResumeOpenPage> createState() => _ResumeOpenPageState();
@@ -13,7 +15,7 @@ class ResumeOpenPage extends StatefulWidget {
 class _ResumeOpenPageState extends State<ResumeOpenPage> {
   PageController pagecontroller =
       PageController(viewportFraction: 1, initialPage: 0);
-  int idx = 5;
+  // int idxs = widget.userNumberOfResume;
   int activeidx = 0;
 
   TextEditingController resumeTitleController = TextEditingController();
@@ -57,7 +59,7 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
           IconButton(
             icon: const Icon(Icons.check_rounded),
             onPressed: () {
-              // _updateResume(5);
+              _updateResume(widget.userNumberOfResume + 1);
               Navigator.pop(context);
             },
           ),
@@ -93,7 +95,7 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                 height: MediaQuery.of(context).size.height - 142,
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 child: PageView.builder(
-                  itemCount: 5,
+                  itemCount: widget.userNumberOfResume + 1,
                   pageSnapping: true,
                   controller: pagecontroller,
                   onPageChanged: (page) {
@@ -124,7 +126,7 @@ class _ResumeOpenPageState extends State<ResumeOpenPage> {
                           );
                         } else if (idx == 1) {
                           return DotsIndicator(
-                            dotsCount: 5,
+                            dotsCount: widget.userNumberOfResume + 1,
                             position: activeidx.toDouble(),
                           );
                         } else if (idx == 2) {

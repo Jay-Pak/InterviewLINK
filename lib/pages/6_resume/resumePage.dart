@@ -18,10 +18,15 @@ class _ResumePageState extends State<ResumePage> {
       .doc('Resume')
       .collection('Resumelist');
 
+  Future<void> _delete(String resumelistId) async {
+    await resumelist.doc(resumelistId).delete();
+  }
+
   List<int> numberOfResume = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   int selectedResumeIndex = 0;
   var selectNumber;
   int value = 0;
+
 
   Widget _buildBottomPicker(Widget picker) {
     return Column(
@@ -50,19 +55,18 @@ class _ResumePageState extends State<ResumePage> {
                   vertical: 5.0,
                 ),
               ),
+              CupertinoButton(child: Text('자개소개서 문항 갯수'), onPressed: () {}),
               CupertinoButton(
-                child: Text('선택완료'),
+                child: Text('완료'),
                 onPressed: () async {
-                  if (selectNumber != null) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => resumeOpenPage(
-                                  getNumber: selectNumber,
-                                )));
-                  }
-                  print(selectNumber);
-                  print(selectNumber.runtimeType);
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => resumeOpenPage(
+                                selectNum: selectNumber,
+                            selecttitle: "",
+                              )));
                 },
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -98,6 +102,8 @@ class _ResumePageState extends State<ResumePage> {
   Widget _buildCupertinoPicker() {
     return Container(
       child: CupertinoPicker(
+        scrollController: FixedExtentScrollController(initialItem:
+        0),
         magnification: 1.8,
         backgroundColor: Colors.white,
         itemExtent: 32,
@@ -114,8 +120,8 @@ class _ResumePageState extends State<ResumePage> {
         onSelectedItemChanged: (index) {
           setState(() => this.value = index);
           selectNumber = numberOfResume[index];
-          print("Selected Number: $selectNumber");
-          print(selectNumber.runtimeType);
+          // print("Selected Number: $selectNumber");
+          // print(selectNumber.runtimeType);
 
           //selectItem 에 입력받은 int 저장 ==> global 변수로 선언후 받아야 하는지??
         },
@@ -130,6 +136,9 @@ class _ResumePageState extends State<ResumePage> {
         appBar: globalVariable.currentIndex == 0
             ? AppBar(
                 title: const Text("이력서"),
+                actions: [
+                  IconButton(onPressed: () {}, icon: Icon(Icons.check_rounded))
+                ],
               )
             : null,
         body: StreamBuilder(
@@ -149,7 +158,20 @@ class _ResumePageState extends State<ResumePage> {
                             children: <Widget>[
                               IconButton(
                                 splashRadius: 16,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              resumeOpenPage(
+                                                  selectNum: documentSnapshot['listnum'],
+                                                selecttitle: documentSnapshot['title'],
+                                              )));
+                                  //편집 페이지로 넘어가기
+                                  //title 네임을 저장해서 resumeOpenPage로 이동시에 넘겨준다
+                                  //resumeOpenPage에 내용들은, title을 받았으면 내용을 보여주고, 아니면 빈값을 보여준다
+                                  //update시에 타이틀이 변경되면서, 기존거는 남아있을경우 대책을 마련해보자
+                                },
                                 icon: const Icon(
                                   Icons.edit_note,
                                   color: Colors.black,
@@ -157,7 +179,9 @@ class _ResumePageState extends State<ResumePage> {
                               ),
                               IconButton(
                                 splashRadius: 16,
-                                onPressed: () {},
+                                onPressed: () {
+                                  _delete(documentSnapshot.id);
+                                },
                                 icon: const Icon(
                                   Icons.delete_forever,
                                   color: Colors.black,
@@ -174,10 +198,14 @@ class _ResumePageState extends State<ResumePage> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () async {
+            setState(() {
+              selectNumber = 1;
+            });
             showCupertinoModalPopup<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return _buildBottomPicker(_buildCupertinoPicker());
+                  return _buildBottomPicker(_buildCupertinoPicker(
+                  ));
                 });
           },
         ));

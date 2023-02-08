@@ -9,15 +9,27 @@ import 'package:http/http.dart';
 import 'package:interview_link/pages/6_resume/resumePage.dart';
 
 class resumeOpenPage extends StatefulWidget {
-  final int? getNumber;
-
-  resumeOpenPage({Key? key, required this.getNumber}) : super(key: key);
+  final int? selectNum;
+  final String? selecttitle;
+  resumeOpenPage({Key? key,required this.selectNum, this.selecttitle}) : super(key: key);
   @override
   State<resumeOpenPage> createState() => _resumeOpenPageState();
 
 }
 
+
 class _resumeOpenPageState extends State<resumeOpenPage> {
+
+  int? getNumber;
+  int _currentIndex = 0;
+  String? getTitle;
+  void initState() {
+    super.initState();
+    getNumber = widget.selectNum;
+    print(widget.selecttitle);
+    getTitle = widget.selecttitle;
+  }
+
   CollectionReference resume = FirebaseFirestore.instance.collection('Resume');
   TextEditingController resumeTitleController = TextEditingController();
   List<TextEditingController> questionController = [
@@ -36,10 +48,6 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
       .doc('Resume')
       .collection('Resumelist');
 
-  int _currentIndex = 0;
-
-
-
   Future<void> _Update() {
     return user
         .doc('Resume')
@@ -47,58 +55,18 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
         .doc('${resumeTitleController.text}')
         .set({
       'title': resumeTitleController.text,
-      for (int i = 0; i < getNumber; i++) 'question$i': questionController[i].text,
-      for (int i = 0; i < getNumber; i++) 'content$i': contentController[i].text,
+      for (int i = 0; i < getNumber!; i++) 'question$i': questionController[i].text,
+      for (int i = 0; i < getNumber!; i++) 'content$i': contentController[i].text,
+      'listnum' : getNumber
     });
   }
-
-  void initState() {
-    super.initState();
-
-    // Future.delayed(Duration.zero, () {
-    //   _resumeDialog();
-    // });
-  }
-
-  // Future<void> _resumeDialog() {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text("자기소개서의 문항 수를 입력해주세요"),
-  //           content: TextField(
-  //             keyboardType: TextInputType.number,
-  //             controller: getnumberController,
-  //           ),
-  //           actions: <Widget>[
-  //             TextButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context);
-  //               },
-  //               child: const Text('Cancel'),
-  //             ),
-  //             TextButton(
-  //               onPressed: () {
-  //                 getnumber = int.parse(getnumberController.text);
-  //                 Navigator.pop(context);
-  //                 setState(() {
-  //                   BuildContext context;
-  //                 });
-  //               },
-  //               child: const Text('OK'),
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
 
 
   @override
   Widget build(BuildContext context)
 
   {
-  final List getnumberlist = List.generate(getNumber, (index) => index +1);
+  final List getnumberlist = List.generate(getNumber!, (index) => index +1);
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(
@@ -126,7 +94,8 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
             height: 30,
             width: 320,
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TextField(
+            child: TextFormField(
+              // initialValue: "$getTitle",
               controller: resumeTitleController,
               decoration: const InputDecoration(
                 hintText: "이력서 제목을 입력해주세요.",
@@ -187,7 +156,7 @@ class _resumeOpenPageState extends State<resumeOpenPage> {
                           ],
                         ),
                         DotsIndicator(
-                          dotsCount: getNumber,
+                          dotsCount: getNumber!,
                           // dotsCount: int.parse(listnumController.text),
                           position: _currentIndex.toDouble(),
                           decorator: DotsDecorator(
